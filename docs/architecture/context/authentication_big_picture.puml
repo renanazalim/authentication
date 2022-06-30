@@ -1,0 +1,11 @@
+@startuml authentication
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2.4.0/C4_Container.puml
+LAYOUT_WITH_LEGEND()
+
+Person(usuario, "Usuário")
+
+Container(consumerHistoricoDigital, "Consumidor Histórico Digital", "React")
+Container(consumerHistoricoDigital, "Consumidor Histórico Digital", "Node")
+
+@enduml
