@@ -1,11 +1,26 @@
 @startuml authentication
 
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2.4.0/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/javascript.puml
+!include DEVICONS/dotnet.puml
+!include FONTAWESOME/users.puml
 LAYOUT_WITH_LEGEND()
 
-Person(usuario, "Usuário")
+AddElementTag("user", $shape=RoundedBoxShape(), $bgColor="#EB8AC6", $fontColor="white")
+AddElementTag("frontend", $shape=RoundedBoxShape(), $bgColor="#6E049C", $fontColor="white")
+AddElementTag("api", $shape=RoundedBoxShape(), $bgColor="#ADE80C", $fontColor="white")
+AddElementTag("database", $shape=RoundedBoxShape(), $bgColor="#A60CE8", $fontColor="white")
 
-Container(consumerHistoricoDigital, "Consumidor Histórico Digital", "React")
-Container(consumerHistoricoDigital, "Consumidor Histórico Digital", "Node")
+System_Boundary(login, "Login"){
 
+    Person(user, "User",  $sprite="users",$tags = "user")
+    Container(interface, "Login Interface", "React",  $sprite="react", $tags = "frontend")
+    Container(apiAuthenticate, "Authenticator Api Service", "Aws Lambda - Node.js", $sprite="node", $tags = "api")
+    ContainerDb(database, "Database of authetntication", "Postgres", $sprite="postgres", $tags = "database")
+}
+Rel_D(user, interface, "Uses", "https")
+Rel_D(interface, apiAuthenticate, "Uses", "https")
+Rel_D(apiAuthenticate, database, "Uses", "https")
 @enduml
