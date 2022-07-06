@@ -3,6 +3,9 @@
 
 name: Frontend CI
 
+env:
+  WORKSPACE_PATH: frontend/authentication
+
 on:
   push:
     branches: [ "master" ]
@@ -22,10 +25,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
+
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: |
+        cd $WORKSPACE_PATH && npm ci
+    - run: | 
+        cd $WORKSPACE_PATH && npm run build --if-present
+    - run: |
+        cd $WORKSPACE_PATH && npm test
