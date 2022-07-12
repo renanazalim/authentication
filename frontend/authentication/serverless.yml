@@ -1,0 +1,61 @@
+service: authentication-frontend
+
+frameworkVersion: '3'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stackTags:
+    Environment: ${opt:stage, 'local'}
+    Context: Authentication
+    Service_Name: ${self:service}
+    Type: Frontend
+  tags:
+    Environment: ${opt:stage, 'local'}
+    Context: Authentication
+    Service_Name: ${self:service}
+    Type: Frontend
+  stage: ${opt:stage, 'local'}
+  region: ${opt:region, 'us-east-2'}
+
+plugins:
+  - serverless-s3-sync
+  - serverless-plugin-ifelse
+
+custom:
+  bucketName: authentication-frontend
+  s3Sync:
+    - bucketName: ${self:custom.bucketName}
+      localDir: build/
+  serverlessIfElse:
+    - If: '"${opt:region, "us-east-2"}" != "us-east-2"'
+      Exclude:
+        - resources.Resources.AppCertificate
+      Set:
+        resources.Resources.CloudFrontDistribution.Properties.DistributionConfig.ViewerCertificate.AcmCertificateArn: '${env:CERTIFICATE_ARN}'
+
+resources:
+  Resources: 
+    ReactAppBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+
+    S3AccessPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: ReactAppBucket
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: '*'
+              Action:
+                - s3:GetObject
+              Resource: arn:aws:s3:::${self:custom.bucketName}/*
