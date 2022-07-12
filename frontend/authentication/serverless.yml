@@ -28,12 +28,6 @@ custom:
   s3Sync:
     - bucketName: ${self:custom.bucketName}
       localDir: build/
-  serverlessIfElse:
-    - If: '"${opt:region, "us-east-2"}" != "us-east-2"'
-      Exclude:
-        - resources.Resources.AppCertificate
-      Set:
-        resources.Resources.CloudFrontDistribution.Properties.DistributionConfig.ViewerCertificate.AcmCertificateArn: '${env:CERTIFICATE_ARN}'
 
 resources:
   Resources: 
