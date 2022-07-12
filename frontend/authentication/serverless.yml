@@ -24,7 +24,7 @@ plugins:
   - serverless-plugin-ifelse
 
 custom:
-  bucketName: authentication-frontend
+  bucketName: react-authentication-frontend
   s3Sync:
     - bucketName: ${self:custom.bucketName}
       localDir: build/
