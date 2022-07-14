@@ -35,9 +35,9 @@ jobs:
         run: |
           cd $WORKSPACE_PATH && npm run build --if-present
 
-      - name: Run Tests
-        run: |
-          cd $WORKSPACE_PATH && npm test
+      # - name: Run Tests
+      #   run: |
+      #     cd $WORKSPACE_PATH && npm test
 
       - name: Configure AWS Credentials
         if: github.event_name == 'push'
