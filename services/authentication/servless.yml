@@ -1,0 +1,48 @@
+service: authentication-service
+
+frameworkVersion: '3'
+useDotenv: true
+
+
+custom:
+  webpack:
+    webpackConfig: ../../webpack.config.js
+    packager: 'yarn'
+    includeModules: true
+  prune:
+    automatic: true
+    number: 3
+
+plugins:
+  - serverless-plugin-monorepo
+  - serverless-webpack
+  - serverless-offline
+  - serverless-deployment-bucket
+  - serverless-prune-plugin
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, "local"}
+  region: ${opt:region, "us-east-2"}
+  deploymentBucket:
+    name: api-authentication-service-${opt:stage, 'local'}
+    serverSideEncryption: AES256
+  stackTags:
+    Environment: ${opt:stage, "local"}
+    Context: Authentication
+    Service_Name: ${self:service}
+    Type: Backend
+  tags:
+    Environment: ${opt:stage, "local"}
+    Context: Authentication
+    Service_Name: ${self:service}
+    Type: Backend
+  tracing:
+    lambda: true
+
+functions:
+  Authorizer:
+    handler: src/api/handler.authorizer
+    environment:
+      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
