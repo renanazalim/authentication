@@ -1,0 +1,52 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Authentication-Service CI/CD
+
+env:
+  WORKSPACE_PATH: services/authentication
+  BRANCH_MASTER: 'refs/heads/master'
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: 'Checkout: ${{ github.ref }}'
+        with:
+          fetch-depth: 0
+    
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install Packages CI
+        run: |
+          cd $WORKSPACE_PATH && npm ci
+    
+      - name: React Build
+        run: |
+          cd $WORKSPACE_PATH && npm run build --if-present
+
+      # - name: Run Tests
+      #   run: |
+      #     cd $WORKSPACE_PATH && npm test
+
+      - name: Configure AWS Credentials
+        if: github.event_name == 'push'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy Production
+        if: github.ref == env.BRANCH_MASTER
+        run: cd $WORKSPACE_PATH && npx sls deploy --region ${{ secrets.AWS_REGION }} -s prod

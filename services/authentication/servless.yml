@@ -3,7 +3,6 @@ service: authentication-service
 frameworkVersion: '3'
 useDotenv: true
 
-
 custom:
   webpack:
     webpackConfig: ../../webpack.config.js
