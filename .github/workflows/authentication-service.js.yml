@@ -10,8 +10,14 @@ env:
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - '.github/workflows/authentication-service.js.yml'
+      - 'services/authentication/**'
   pull_request:
     branches: [ "master" ]
+    paths:
+      - '.github/workflows/authentication-service.js.yml'
+      - 'services/authentication/**'
 
 jobs:
   build:
