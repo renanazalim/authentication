@@ -3,15 +3,6 @@ service: authentication-service
 frameworkVersion: '3'
 useDotenv: true
 
-custom:
-  webpack:
-    webpackConfig: ../../webpack.config.js
-    packager: 'yarn'
-    includeModules: true
-  prune:
-    automatic: true
-    number: 3
-
 plugins:
   - serverless-plugin-monorepo
   - serverless-webpack
@@ -25,7 +16,7 @@ provider:
   stage: ${opt:stage, "local"}
   region: ${opt:region, "us-east-2"}
   deploymentBucket:
-    name: api-authentication-service-${opt:stage, 'local'}
+    name: authentication-service-${opt:stage, 'local'}
     serverSideEncryption: AES256
   stackTags:
     Environment: ${opt:stage, "local"}
