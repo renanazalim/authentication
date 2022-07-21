@@ -1,23 +1,31 @@
 {
   "name": "authentication-service",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
+  "description": "Serverless authentication server",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test --",
+    "lint": "npm eslint . --ext .js,.ts"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "aws-lambda": "^1.0.7",
-    "jsonwebtoken": "^8.5.1",
-    "serverless": "^3.21.0",
-    "serverless-plugin-monorepo": "^0.11.0",
-    "typescript": "^4.7.4"
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.101",
+    "@types/faker": "^5.1.5",
+    "@types/jest": "^28.1.6",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^18.0.6",
+    "faker": "^5.5.3",
+    "jest": "^28.1.3",
     "serverless-deployment-bucket": "^1.6.0",
     "serverless-offline": "^9.0.0",
-    "serverless-prune-plugin": "^2.0.1"
-  }
+    "serverless-plugin-monorepo": "^0.11.0",
+    "serverless-prune-plugin": "^2.0.1",
+    "serverless-webpack": "^5.7.1",
+    "ts-jest": "^28.0.7",
+    "typescript": "^4.7.4"
+  },
+  "license": "MIT",
+  "private": true
 }
