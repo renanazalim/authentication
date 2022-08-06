@@ -6,7 +6,7 @@ useDotenv: true
 custom:
   webpack:
     webpackConfig: ../../webpack.config.js
-    packager: 'yarn'
+    packager: 'npm'
     includeModules: true
 
 plugins:
