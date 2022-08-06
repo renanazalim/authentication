@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Serverless authentication server",
   "scripts": {
+    "start": "npx sls offline start -s local --httpPort 3003 --lambdaPort 4003",
     "test": "npm run test --",
     "lint": "npm eslint . --ext .js,.ts"
   },
   "dependencies": {
     "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1189.0",
+    "axios": "^0.27.2",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
@@ -18,6 +21,7 @@
     "@types/node": "^18.0.6",
     "faker": "^5.5.3",
     "jest": "^28.1.3",
+    "serverless-associate-waf": "^1.2.1",
     "serverless-deployment-bucket": "^1.6.0",
     "serverless-offline": "^9.0.0",
     "serverless-plugin-monorepo": "^0.11.0",

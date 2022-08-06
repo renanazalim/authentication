@@ -1,7 +1,4 @@
-import { APIGatewayAuthorizerResult } from 'aws-lambda/trigger/api-gateway-authorizer';
-
-export default class AuthorizationResponse {
-  success: boolean;
-
-  result: APIGatewayAuthorizerResult;
+export default class AuthorizationResponse{
+    service: string;
+    token: string;
 }

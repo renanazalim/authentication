@@ -3,6 +3,12 @@ service: authentication-service
 frameworkVersion: '3'
 useDotenv: true
 
+custom:
+  webpack:
+    webpackConfig: ../../webpack.config.js
+    packager: 'yarn'
+    includeModules: true
+
 plugins:
   - serverless-plugin-monorepo
   - serverless-webpack
@@ -18,21 +24,42 @@ provider:
   deploymentBucket:
     name: authentication-service-${opt:stage, 'local'}
     serverSideEncryption: AES256
-  stackTags:
-    Environment: ${opt:stage, "local"}
-    Context: Authentication
-    Service_Name: ${self:service}
-    Type: Backend
-  tags:
-    Environment: ${opt:stage, "local"}
-    Context: Authentication
-    Service_Name: ${self:service}
-    Type: Backend
   tracing:
     lambda: true
+    apiGateway: true
+  environment:
+    JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    JWT_SECRET_REFRESH_KEY: ${env:JWT_SECRET_REFRESH_KEY}
+    JWT_EXPIRES_TOKEN: ${env:JWT_EXPIRES_TOKEN}
 
 functions:
   Authorizer:
     handler: src/api/handler.authorizer
-    environment:
-      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    events:
+      - http:
+          method: post
+          path: /api/authentication/getToken
+    tags:
+      Entity: Api
+      API_Version: "1"
+
+Resources:
+  apiCredential:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Api.Credential
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: service
+          AttributeType: S
+        - AttributeName: secretKey
+          AttributeType: S
+        - AttributeName: Roles
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
