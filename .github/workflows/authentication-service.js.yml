@@ -46,13 +46,11 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install Packages CI
-        run: |
-          cd $WORKSPACE_PATH && npm ci
+      - name: Clean NPM cache
+        run: npm cache clean –force
     
-      - name: React Build
-        run: |
-          cd $WORKSPACE_PATH && npm run build --if-present
+      - name: Install packages
+        run: npm install
 
       # - name: Run Tests
       #   run: |
@@ -65,6 +63,9 @@ jobs:
           aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Clean NPM cache
+        run: npm cache clean –force
 
       - name: Deploy Production
         if: github.ref == env.BRANCH_MASTER
