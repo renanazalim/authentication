@@ -16,4 +16,5 @@
 **/lib
 core
 **/*.log
+**/.webpack/*
 
