@@ -50,7 +50,8 @@ jobs:
         run: npm cache clean –force
     
       - name: Install packages
-        run: npm install
+        run: |
+          cd $WORKSPACE_PATH npm install
 
       # - name: Run Tests
       #   run: |
