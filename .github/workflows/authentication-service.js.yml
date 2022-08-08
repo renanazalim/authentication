@@ -51,7 +51,7 @@ jobs:
     
       - name: Install packages
         run: |
-          cd $WORKSPACE_PATH npm install
+          cd $WORKSPACE_PATH && npm install
 
       # - name: Run Tests
       #   run: |
