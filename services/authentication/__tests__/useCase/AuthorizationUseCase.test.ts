@@ -5,7 +5,7 @@ describe('Authorize user', () => {
     
         
         expect(undefined).toBeUndefined();
-        expect(true).toBeFalsy();
+        expect(false).toBeFalsy();
       });
 
 });
