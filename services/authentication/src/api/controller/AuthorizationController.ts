@@ -25,7 +25,10 @@ export default class AuthorizationController {
             body: JSON.stringify(response)
           } as APIGatewayProxyResult;
 
-        } catch(error){ }
+        } catch(error){
+
+          return { statusCode: 500 } as APIGatewayProxyResult;
+         }
     }
 
 }
