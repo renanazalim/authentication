@@ -1,10 +1,10 @@
-import { ICredentialRepository, IGetByServicedAndSecretKey } from "../../../domain/interface/repositories/ICredentialRepository";
 import Credential from "../../../domain/model/Credential";
 import { DynamoDBClient } from "../AWSProvider";
 
-export class CredentialRepository implements ICredentialRepository{
-    GetByServiceAndSecretKey: IGetByServicedAndSecretKey = async (service, secretKey) => {
-      const DynamoDB = DynamoDBClient();
+export class CredentialRepository {
+    private dynamoDbClient = DynamoDBClient();
+
+    async getByServiceAndSecretKey(service: string, secretKey: string): Promise<Credential> {
       const params = {
         TableName: `Api.Credential`,
         FilterExpression:
@@ -14,8 +14,6 @@ export class CredentialRepository implements ICredentialRepository{
           ':secretKey': secretKey
         }
       };
-      const data = await DynamoDB.scan(params).promise();
-      return data.Items[0] as Credential;
-    };
-    
+      return (await this.dynamoDbClient.query(params).promise()).Items[0] as Credential;
+    }    
 }

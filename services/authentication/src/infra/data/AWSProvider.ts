@@ -1,5 +1,3 @@
 import AWS from 'aws-sdk';
 
-export const DynamoDBClient = () => {
-  return new AWS.DynamoDB.DocumentClient();
-};
+export const DynamoDBClient = () => new AWS.DynamoDB.DocumentClient();

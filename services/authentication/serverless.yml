@@ -34,7 +34,7 @@ provider:
 
 functions:
   Authorizer:
-    handler: src/api/handler.authorizer
+    handler: src/api/handler.authorization
     events:
       - http:
           method: post

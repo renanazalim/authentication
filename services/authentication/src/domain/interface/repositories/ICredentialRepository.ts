@@ -5,5 +5,5 @@ export interface IGetByServicedAndSecretKey {
 }
 
 export interface ICredentialRepository {
-    GetByServiceAndSecretKey: IGetByServicedAndSecretKey;
+    getByServiceAndSecretKey: Promise<Credential>;
 }
