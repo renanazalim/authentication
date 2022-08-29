@@ -49,9 +49,6 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: Api.Credential
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
@@ -63,9 +60,6 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: User.Credential
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
