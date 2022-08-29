@@ -52,10 +52,6 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
-          - AttributeName: service
-            AttributeType: S
-          - AttributeName: secretKey
-            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
@@ -69,10 +65,6 @@ resources:
         TableName: User.Credential
         AttributeDefinitions:
           - AttributeName: id
-            AttributeType: S
-          - AttributeName: userName
-            AttributeType: S
-          - AttributeName: password
             AttributeType: S
         KeySchema:
           - AttributeName: id
