@@ -45,7 +45,7 @@ functions:
 
 resources:
   Resources:
-    ApiCredential:
+    ApiCredentialTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: Api.Credential
@@ -56,15 +56,14 @@ resources:
             AttributeType: S
           - AttributeName: secretKey
             AttributeType: S
-          - AttributeName: Roles
-            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    UserCredential:
+
+    UserCredentialTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: User.Credential
