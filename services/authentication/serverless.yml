@@ -52,6 +52,8 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+          - AttributeName: credentialType
+            KeyType: HASH
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
