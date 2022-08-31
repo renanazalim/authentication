@@ -65,31 +65,3 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
-
-    ApiCredentialTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Api.Credential
-        KeySchema:
-          - AttributeName: apiId
-            KeyType: HASH
-        AttributeDefinitions:
-          - AttributeName: apiId
-            AttributeType: S
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-
-    UserCredentialTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: User.Credential
-        KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
-        AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
