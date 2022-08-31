@@ -45,30 +45,23 @@ functions:
 
 resources:
   Resources:
-    ApiCredentialTable:
+    CredentialTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Api.Credential
+        TableName: Credential.Api
         KeySchema:
-          - AttributeName: apiId
+          - AttributeName: id
             KeyType: HASH
         AttributeDefinitions:
-          - AttributeName: apiId
+          - AttributeName: id
             AttributeType: S
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-
-    UserCredentialTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: User.Credential
-        KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
-        AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: CredentialSummaryType
+            KeySchema: 
+              - AttributeName: credentialType
+                KeyType: HASH
+            Projection:
+              ProjectionType: 'ALL'
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
