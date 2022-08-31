@@ -48,7 +48,10 @@ resources:
     CredentialTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Credential.Api
+        TableName: Credential
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
         KeySchema:
           - AttributeName: id
             KeyType: HASH
@@ -61,7 +64,5 @@ resources:
               - AttributeName: credentialType
                 KeyType: HASH
             Projection:
-              ProjectionType: 'ALL'
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+              ProjectionType: ALL
+        
