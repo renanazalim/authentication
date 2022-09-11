@@ -53,7 +53,7 @@ resources:
           - AttributeName: id
             KeyType: HASH
           - AttributeName: credentialType
-            KeyType: HASH
+            KeyType: RANGE
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
